@@ -5,11 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR BANK</title>
 </head>
-<body>
+<body style="background-color: teal;">
     <h1>AR BANK</h1>
     <h2>Our Dear Customers Your Welcome to AR BANK'S official website</h2>
     <p>WHERE SECURITY MEETS GROWTH</p>
     <p>Your information is safe with us. Please keep your information confidential</p>
-    <a href="{% url 'branch_page'%}">Branch page</a>
+
+    <ul>
+        <li><a href="{% url 'branch_page'%}">Branch page</a></li>
+        <li><a href="{% url 'employees_page'%}">Employee details</a></li>
+        <li><a href="{% url 'customers_page'%}">Customer Details</a></li>
+        <li><a href="{% url 'accounts_page'%}">Accounts Details</a></li>
+        <li><a href="{% url 'account_types_page'%}">Account types</a></li>
+    </ul>
+    
 </body>
 </html>
