@@ -1,0 +1,15 @@
+Set-Content -Path ".gitignore" -Value "db.sqlite3
+*.pyc
+__pycache__/
+.env
+"
+./db.sqlite3 | Out-Null
+# Ignore SQLite database files
+*.sqlite3
+
+# Ignore SQLite database file
+db.sqlite3
+# 2️⃣ Stop tracking the file (if it was already added before)
+git rm --cached db.sqlite3
+
+
