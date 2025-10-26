@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+    {% load crispy_forms_tags %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR BANK CUSTOMERS</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <h1>Add Customer </h1>
+    <div class = "container">
+       <form method="POST">
+            {% csrf_token %} 
+            {{ form|crispy }}
+            <input type="submit" class ="btn btn-success">
+       </form>
+        {% if msg %}
+            {{msg}}
+        {% endif %}
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope = "col">No.</th>
+                    <th scope = "col">first_name</th>
+                    <th scope = "col">last_name</th>
+                    <th scope = "col">address</th>
+                    <th scope = "col">contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                    <tr>
+                        <th scope="row">{{customer.id}}</th>
+                        <td>{{customer.first_name}}</td>
+                        <td>{{customer.last_name}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{customer.contact}}</td>
+                        <td>
+                            <a href="{% url 'edit_customer_page' customer.id %}">Edit</a>|
+                            <a href="{% url 'delete_customer_page' customer.id %}" onclick="return confirm('Are you sure you want to delete this Customer?')">
+                                Delete</a>
+                           
+
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+   
+
+        <a href="{% url 'home_page' %}"class="btn btn-secondary"> Home Page</a>
+    </div>
+</body>
+</html>
+
+
+
+
+

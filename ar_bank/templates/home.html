@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR BANK</title>
 </head>
-<body style="background-color: teal;">
+
+<body>
     <h1>AR BANK</h1>
     <h2>Our Dear Customers Your Welcome to AR BANK'S official website</h2>
     <p>WHERE SECURITY MEETS GROWTH</p>
@@ -18,6 +19,18 @@
         <li><a href="{% url 'accounts_page'%}">Accounts Details</a></li>
         <li><a href="{% url 'account_types_page'%}">Account types</a></li>
     </ul>
-    
+
+    <ul>
+        <li><a href="{% url 'add_branch_page'%}">Add Branch</a></li>
+        <li><a href="{% url 'add_accounttype_page'%}">Add Account type</a></li>
+        <li><a href="{% url 'add_customer_page'%}">Add customer</a></li>
+        <li><a href="{% url 'add_account_page'%}">Add Account</a></li>
+        <li><a href="{% url 'add_employee_page'%}">Add Employee</a></li>
+        <li><a href="{% url 'add_withdraw_page'%}">Add Withdraw Info</a></li>
+        <li><a href="{% url 'add_deposit_page'%}">Add Deposit Info</a></li>
+        <li><a href="{% url 'add_transfer_page'%}">Add Transfer Info</a></li>
+        <li><a href="{% url 'add_transaction_page'%}">Add Transaction Details</a></li>
+    </ul>
+    </ul>
 </body>
 </html>
