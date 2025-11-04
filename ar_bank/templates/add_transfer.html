@@ -16,8 +16,10 @@
             {{ form|crispy }}
             <input type="submit" class ="btn btn-success">
        </form>
-        {% if msg %}
-            {{msg}}
+          {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
         {% endif %}
 
         <table class="table table-striped">

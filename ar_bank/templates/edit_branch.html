@@ -18,9 +18,11 @@
             <input type="submit" class="btn btn-primary">
             <input type="cancel" class="btn btn-danger">
 
-            {% if message %}
-                {{message}}
-            {% endif %}
+            {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
 
         </form>
         <a href="{% url 'add_branch_page'%}">Add branch page </a>
