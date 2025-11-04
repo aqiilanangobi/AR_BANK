@@ -33,6 +33,7 @@ class Account(models.Model):
         ("S","Suspended"),
     ]
     opening_date = models.DateField(auto_now=True)
+    account_number = models.CharField(max_length=30,default='0000')
     pin = models.CharField(max_length=20)
     balance = models.IntegerField()
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE)
@@ -60,9 +61,14 @@ class Employee(models.Model):
         return f"{self.first_name} {self.employee_position}"
 
 class Transaction(models.Model):
+    TRANSACTION =[
+        ("D","Deposit"),
+        ("W","Withdraw"),
+        ("T","Transfer"),
+    ]
     date = models.DateField(auto_now=False)
     amount= models.IntegerField(verbose_name="transaction_amount")
-    transaction_type = models.CharField(max_length=30)
+    transaction_type = models.CharField(max_length=2,choices=TRANSACTION)
     account = models.ForeignKey(Account,on_delete=models.CASCADE)
     recorded_by = models.ForeignKey(Employee,on_delete=models.CASCADE)
 
@@ -71,9 +77,9 @@ class Transaction(models.Model):
 
 class Transfer(models.Model):
     date = models.DateField(auto_now=False)
-    account = models.ForeignKey(Account,on_delete=models.CASCADE)
+    account = models.ForeignKey(Account,on_delete=models.CASCADE,related_name='sent_transfers')
     transfer_amount = models.IntegerField()
-    receivers_account = models.IntegerField()
+    receivers_account = models.ForeignKey(Account,on_delete=models.CASCADE,default='0000',related_name='received_transfers')
     recorded_by = models.ForeignKey(Employee,on_delete=models.CASCADE)
 
     def __str__(self):

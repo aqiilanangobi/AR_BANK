@@ -2,6 +2,9 @@ Set-Content -Path ".gitignore" -Value "db.sqlite3
 *.pyc
 __pycache__/
 .env
+<<<<<<< HEAD
+"
+=======
 "
 ./db.sqlite3 | Out-Null
 # Ignore SQLite database files
@@ -13,3 +16,4 @@ db.sqlite3
 git rm --cached db.sqlite3
 
 
+>>>>>>> main
