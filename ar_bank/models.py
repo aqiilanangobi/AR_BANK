@@ -32,7 +32,7 @@ class Account(models.Model):
         ("I","Inactive"),
         ("S","Suspended"),
     ]
-    opening_date = models.DateField(auto_now=True)
+    opening_date = models.DateField(auto_now=False)
     account_number = models.CharField(max_length=30,default='0000')
     pin = models.CharField(max_length=20)
     balance = models.IntegerField()

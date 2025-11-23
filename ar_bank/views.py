@@ -1,13 +1,22 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-#from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm
 
 from ar_bank.forms import BranchForm,Account_typeForm,CustomerForm,AccountForm,EmployeeForm,WithdrawForm,DepositForm,TransferForm,TransactionForm
+
 from ar_bank.models import Branch,Account_type,Customer,Account,Employee,Withdraw,Deposit,Transfer,Transaction
 
+from django.contrib.auth.decorators import login_required
+
+
+
+
+   
+
+@login_required
 def home_view(request):
     return render(request,'home.html')
-
+'''''
 def branch_view(request):
     return render(request,'branch.html')
 
@@ -22,14 +31,15 @@ def customers_view(request):
 
 def employees_view(request):
     return render(request,'employees.html')
+'''
 
 
-
+@login_required
 def add_branch_view(request):
     branchs = Branch.objects.all()
     
     if request.method == "POST":
-        
+        branch_form = BranchForm(request.POST)
         if branch_form.is_valid():
             branch_form.save()
             messages.success(request,"Branch Added Successfully")
@@ -46,7 +56,7 @@ def add_branch_view(request):
         'branchs':branchs
     }
 
-    return render(request,"add_branch.html",context)
+    return render(request,"add_branch.html",context,)
 
 def edit_branch_view(request,branch_id):
     branch = Branch.objects.get(id=branch_id)
@@ -77,7 +87,7 @@ def delete_branch_view(request,branch_id):
 
     return redirect('/add_branch/')
 
-
+@login_required
 def add_accounttype_view(request):
    
     accounttypes = Account_type.objects.all()
@@ -102,7 +112,6 @@ def add_accounttype_view(request):
     return render(request,"add_accounttype.html",context)
 
 def edit_accounttype_view(request,accounttype_id):
-    message = ''
     accounttype =Account_type.objects.get(id=accounttype_id)
 
     if request.method =="POST":
@@ -121,7 +130,6 @@ def edit_accounttype_view(request,accounttype_id):
     context = {
         'form': accounttype_form,
         'accounttype': accounttype,
-        'message': message
     }
 
     return render(request,'edit_accounttype.html',context)
@@ -134,7 +142,7 @@ def delete_accounttype_view(request,accounttype_id):
 
     return redirect('/add account type/')
 
-
+@login_required
 def add_customer_view(request):
    
     customers = Customer.objects.all()
@@ -168,7 +176,7 @@ def edit_customer_view(request,customer_id):
         customer_form = CustomerForm(request.POST,instance=customer)
         if customer_form.is_valid():
             customer_form.save()
-            messages.success("changes saved successfully")
+            messages.success(request,"changes saved successfully")
            
             return redirect(add_customer_view)
         else:
@@ -193,27 +201,28 @@ def delete_customer_view(request,customer_id):
     return redirect('/add customer/')
 
 
+
 def add_account_view(request):
-   
     accounts = Account.objects.all()
     
     if request.method == "POST":
         account_form = AccountForm(request.POST)
 
         if account_form.is_valid():
-           account_form.save()
-           message = "account added successfully"
+            account_form.save()
+            messages.success(request, "Account added successfully")
         else:
-            print("Form is invalid...")
-    else:
-        account_form = AccountForm()
+            messages.error(request, "Form is invalid...")
+
+    account_form = AccountForm()
 
     context = {
         'form': account_form,
-        'accounts':accounts
+        'accounts': accounts,
     }
 
-    return render(request,"add_account.html",context)
+    return render(request, "add_account.html", context)
+
 
 def edit_account_view(request,account_id):
 
@@ -524,27 +533,28 @@ def delete_transaction_view(request,transaction_id):
 
     return redirect('/add transaction/')
 
-'''''
+
 
 def sign_up_view(request):
-    message = ''
+
     if request.method == "POST":
-        sign_up_form = UserCreationForm.POST
+        sign_up_form = UserCreationForm(request.POST)
         if sign_up_form.is_valid():
             sign_up_form.save()
-            message ="User created successfully"
+            messages.success(request,"Account created successfully")
+            
         else:
-            message = "Something went wrong"
+            messages.error(request,"Form is invalid...")
     else:
         sign_up_form =UserCreationForm()
     
 
     context = {
         'form':sign_up_form,
-        'message':message
+        
     }
     return render(request,'registration/sign_up.html',context)
-'''
+
 
 
 

@@ -1,17 +1,15 @@
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 
-from ar_bank.views import home_view,branch_view,account_types_view,accounts_view,customers_view,employees_view,add_branch_view,add_accounttype_view,edit_branch_view,delete_branch_view,edit_accounttype_view,delete_accounttype_view,add_customer_view,edit_customer_view,delete_customer_view,add_account_view,edit_account_view,delete_account_view,add_employee_view,edit_employee_view,delete_employee_view,add_withdraw_view,edit_withdraw_view,delete_withdraw_view,add_deposit_view,edit_deposit_view,delete_deposit_view,add_transfer_view,edit_transfer_view,delete_transfer_view,add_transaction_view,edit_transaction_view,delete_transaction_view
+from ar_bank.views import home_view,add_branch_view,add_accounttype_view,edit_branch_view,delete_branch_view,edit_accounttype_view,delete_accounttype_view,add_customer_view,edit_customer_view,delete_customer_view,add_account_view,edit_account_view,delete_account_view,add_employee_view,edit_employee_view,delete_employee_view,add_withdraw_view,edit_withdraw_view,delete_withdraw_view,add_deposit_view,edit_deposit_view,delete_deposit_view,add_transfer_view,edit_transfer_view,delete_transfer_view,add_transaction_view,edit_transaction_view,delete_transaction_view,sign_up_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',home_view,name='home_page'),
-    path('AR branches/',branch_view,name='branch_page'),
-    path('account types/',account_types_view,name='account_types_page'),
-    path('accounts/',accounts_view,name='accounts_page'),
-    path('customers/',customers_view,name='customers_page'),
-    path('employess/',employees_view,name='employees_page'),
+    path('',sign_up_view,name='sign_up_page'),
+    path('accounts/',include('django.contrib.auth.urls')),
+    path('home/',home_view,name='home_page'),
+    
     
     path('add_branch/',add_branch_view, name="add_branch_page"),
     path('edit branch/<int:branch_id>/',edit_branch_view,name="edit_branch_page"),
@@ -45,13 +43,11 @@ urlpatterns = [
     path('edit transfer/<int:transfer_id>/',edit_transfer_view,name="edit_transfer_page"),
     path('delete transfer/<int:transfer_id>/',delete_transfer_view,name="delete_transfer_page"),
 
-    path('add transaction/',add_transaction_view, name="add_transaction_page"),
+    path('add-transaction/',add_transaction_view, name="add_transaction_page"),
     path('edit transaction/<int:transaction_id>/',edit_transaction_view,name="edit_transaction_page"),
     path('delete transaction/<int:transaction_id>/',delete_transaction_view,name="delete_transaction_page"),
 
 
-
-
-
-
+    path('sign_up/',sign_up_view,name='sign_up_page'),
+    
 ]

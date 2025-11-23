@@ -1,70 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
-    {% load static %}
-    {% load crispy_forms_tags %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR BANK ACCOUNTS</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-</head>
-<body>
-    <h1>Add Account </h1>
-    <div class = "container">
-       <form method="POST">
-            {% csrf_token %} 
-            {{ form|crispy }}
-            <input type="submit" class ="btn btn-success">
-       </form>
-        {% if msg %}
-            {{msg}}
-        {% endif %}
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
 
-        <table class="table table-striped">
-            <thead>
+{% block content %}
+
+<h2 class="mb-4">Accounts</h2>
+
+<!-- Small Stylish Add Account Button -->
+<button class="btn mb-3" 
+        style="background:#6f42c1; color:white; padding:6px 14px; border-radius:6px;"
+        data-toggle="modal" data-target="#accountModal">
+    <i class="fa fa-plus"></i> Add Account
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="accountModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 450px;">
+    <div class="modal-content" style="border-radius: 10px;">
+
+      <!-- Modal Header -->
+      <div class="modal-header bg-dark text-white py-2">
+        <h5 class="modal-title">Add Account</h5>
+        <button type="button" class="close text-white" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body" style="padding: 20px;">
+        <form method="POST">
+          {% csrf_token %}
+          {{ form|crispy }}
+
+          <button type="submit" class="btn btn-success btn-sm">
+            <i class="fa fa-check"></i> Submit
+          </button>
+
+          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+            Cancel
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Accounts Table -->
+<div class="card shadow-sm">
+    <div class="card-header bg-dark text-white">
+        <strong>Accounts List</strong>
+    </div>
+
+    <div class="card-body p-0">
+        <table class="table table-striped table-bordered mb-0">
+            <thead class="thead-dark">
                 <tr>
-                    <th scope = "col">No.</th>
-                    <th scope = "col">opening_date</th>
-                    <th scope = "col">account_number</th>
-                    <th scope = "col">pin</th>
-                    <th scope = "col">balance</th>
-                    <th scope = "col">branch</th>
-                    <th scope = "col">customer</th>
-                    <th scope = "col">account_type</th>
-                    <th scope = "col">account_status</th>
+                    <th>No.</th>
+                    <th>Opening Date</th>
+                    <th>Account Number</th>
+                    <th>Pin</th>
+                    <th>Balance</th>
+                    <th>Branch</th>
+                    <th>Customer</th>
+                    <th>Account Type</th>
+                    <th>Account Status</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
+
             <tbody>
                 {% for account in accounts %}
-                    <tr>
-                        <th scope="row">{{account.id}}</th>
-                        <td>{{account.opening_date}}</td>
-                        <td>{{account.account_number}}</td>
-                        <td>{{account.pin}}</td>
-                        <td>{{account.balance}}</td>
-                        <td>{{account.branch}}</td>
-                        <td>{{account.customer}}</td>
-                        <td>{{account.account_type}}</td>
-                        <td>{{account.account_status}}</td>
-                        <td>
-                            <a href="{% url 'edit_account_page' account.id %}">Edit</a>|
-                            <a href="{% url 'delete_account_page' account.id %}" onclick="return confirm('Are you sure you want to delete this Account?')">
-                                Delete</a>
-                           
+                <tr>
+                    <td>{{ account.id }}</td>
+                    <td>{{ account.opening_date }}</td>
+                    <td>{{ account.account_number }}</td>
+                    <td>{{ account.pin }}</td>
+                    <td>{{ account.balance }}</td>
+                    <td>{{ account.branch }}</td>
+                    <td>{{ account.customer }}</td>
+                    <td>{{ account.account_type }}</td>
+                    <td>{{ account.account_status }}</td>
 
-                        </td>
-                    </tr>
+                    <td class="text-center">
+                        <a href="{% url 'edit_account_page' account.id %}" class="text-primary mr-2">
+                            <i class="fa fa-edit"></i>
+                        </a>
+
+                        <a href="{% url 'delete_account_page' account.id %}" 
+                           class="text-danger"
+                           onclick="return confirm('Delete this account?');">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
-   
-
-        <a href="{% url 'home_page' %}"class="btn btn-secondary"> Home Page</a>
     </div>
-</body>
-</html>
+</div>
 
-
-
-
-
+{% endblock content %}
