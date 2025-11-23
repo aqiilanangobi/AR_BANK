@@ -1,0 +1,99 @@
+{% extends '../base_auth.html' %}
+{% load crispy_forms_tags static %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #547094, #007bff);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .login-container {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 40px;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+    }
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: none;
+        padding: 12px;
+    }
+
+    .btn-primary {
+        background-color: #6a86a1;
+        border: none;
+        width: 100%;
+        border-radius: 10px;
+        padding: 12px;
+        font-weight: 600;
+    }
+
+    .btn-primary:hover {
+        background-color: #406c99;
+    }
+
+    .logo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .logo img {
+        width: 180px;
+    }
+
+    .message {
+        text-align: center;
+        margin-top: 10px;
+        color: #ffdf00;
+    }
+
+    .text-muted a {
+        color: #fff;
+        text-decoration: underline;
+    }
+</style>
+
+<div class="login-container">
+    <div class="logo">
+        <img src="{% static 'images/ar_image.jpg' %}" alt="AR BANK Logo">
+    </div>
+    <h2>Welcome Back to AR BANK</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <button type="submit" class="btn btn-primary mt-3">Login</button>
+
+        {% if messages %}
+            <div class="message">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </form>
+
+    <p class="text-center text-muted mt-3">
+        Don't have an account?
+        <a href="{% url 'sign_up_page' %}">Sign Up</a>
+    </p>
+</div>
+{% endblock content %}
